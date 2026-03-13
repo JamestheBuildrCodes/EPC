@@ -638,7 +638,7 @@ function goStep(n){
 
 // ── GOOGLE SHEETS ENDPOINT ──────────────────────────────────────────────
 // Paste your Apps Script Web App URL here after deploying:
-const SHEET_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxsCGDhU8K2b81o-aGPxrf42Y5wC0JDJRbGUTYUVuhP9hIdjQGV467hxEj8_4Y2o4m6/exec';
 // ────────────────────────────────────────────────────────────────────────
 
 // Submit
@@ -658,7 +658,7 @@ document.getElementById('ftForm').addEventListener('submit', async function(e) {
   data.submittedAt = new Date().toLocaleString('en-NG', {timeZone:'Africa/Lagos'});
 
   try {
-    if (SHEET_URL && SHEET_URL !== 'YOUR_APPS_SCRIPT_URL_HERE') {
+    if (SHEET_URL) {
       await fetch(SHEET_URL, {
         method: 'POST',
         mode: 'no-cors',
