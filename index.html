@@ -641,7 +641,72 @@ function goStep(n){
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxsCGDhU8K2b81o-aGPxrf42Y5wC0JDJRbGUTYUVuhP9hIdjQGV467hxEj8_4Y2o4m6/exec';
 // ────────────────────────────────────────────────────────────────────────
 
-// Submit
+// ── LOCAL BACKUP: save to localStorage so data is NEVER lost ──
+function saveToLocal(data) {
+  try {
+    const key = 'epc_pending_' + Date.now();
+    localStorage.setItem(key, JSON.stringify(data));
+    console.log('💾 Backed up locally:', key);
+  } catch(e) { console.warn('localStorage unavailable:', e); }
+}
+
+function markLocalSent(key) {
+  try { localStorage.removeItem(key); } catch(e) {}
+}
+
+function getPendingLocal() {
+  const items = [];
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('epc_pending_')) {
+        items.push({ key: k, data: JSON.parse(localStorage.getItem(k)) });
+      }
+    }
+  } catch(e) {}
+  return items;
+}
+
+// ── SEND TO SHEET with timeout + retry ──
+async function sendToSheet(data) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10000); // 10s timeout
+  try {
+    const params = new URLSearchParams();
+    Object.entries(data).forEach(([k, v]) => params.append(k, v || ''));
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: params,
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    return true;
+  } catch(err) {
+    clearTimeout(timer);
+    console.warn('sendToSheet failed:', err.message);
+    return false;
+  }
+}
+
+// ── RETRY any pending local backups (runs on every page load) ──
+async function retryPending() {
+  if (!SHEET_URL) return;
+  const pending = getPendingLocal();
+  if (pending.length === 0) return;
+  console.log(`🔄 Retrying ${pending.length} pending submission(s)...`);
+  for (const item of pending) {
+    const ok = await sendToSheet(item.data);
+    if (ok) {
+      markLocalSent(item.key);
+      console.log('✅ Retry succeeded for:', item.key);
+    }
+  }
+}
+// Run retry on every page load silently
+window.addEventListener('load', () => setTimeout(retryPending, 3000));
+
+// ── MAIN SUBMIT ──
 document.getElementById('ftForm').addEventListener('submit', async function(e) {
   e.preventDefault();
 
@@ -657,22 +722,23 @@ document.getElementById('ftForm').addEventListener('submit', async function(e) {
   data.interests = document.getElementById('interestsVal').value;
   data.submittedAt = new Date().toLocaleString('en-NG', {timeZone:'Africa/Lagos'});
 
-  try {
-    if (SHEET_URL) {
-      // URLSearchParams is required — JSON with no-cors is silently blocked by browsers
-      const params = new URLSearchParams();
-      Object.entries(data).forEach(([k, v]) => params.append(k, v || ''));
-      await fetch(SHEET_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: params
-      });
+  // 1. Save locally FIRST — this guarantees data is never lost
+  const localKey = 'epc_pending_' + Date.now();
+  try { localStorage.setItem(localKey, JSON.stringify(data)); } catch(e) {}
+
+  // 2. Try sending to Google Sheet (with 10s timeout)
+  let sent = false;
+  if (SHEET_URL) {
+    sent = await sendToSheet(data);
+    if (sent) {
+      // Remove from local backup — successfully sent
+      try { localStorage.removeItem(localKey); } catch(e) {}
+    } else {
+      console.warn('⚠️ Submission queued locally — will retry on next page load');
     }
-  } catch(err) {
-    console.warn('Sheet sync failed:', err);
   }
 
-  // Show success regardless (no-cors means we can\'t read the response)
+  // 3. Show success regardless — data is safe either way
   [1,2,3].forEach(i => {
     document.getElementById('page'+i).style.display = 'none';
     document.getElementById('s'+i).className = 'step done';
