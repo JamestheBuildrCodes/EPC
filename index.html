@@ -6,6 +6,9 @@
 <title>First Timer | Everything by Prayer Church – Port Harcourt</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Nunito:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/jpeg" href="logo.jpg"/>
+<link rel="apple-touch-icon" href="logo.jpg"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 <style>
 :root{
   --gold:#C9954A;--gold-light:#E8C07A;--navy:#0A1628;--navy-mid:#112240;--navy-soft:#1B3358;
@@ -131,7 +134,7 @@ h1 .shimmer{
   background:rgba(201,149,74,.05);transition:all .2s;
 }
 .band-link:hover{background:rgba(201,149,74,.15);border-color:var(--gold);color:var(--white)}
-.band-link .icon3d{font-size:18px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.band-link .icon3d{font-size:16px;color:var(--gold);filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
 
 /* FORM SECTION */
 .form-section{position:relative;z-index:1;padding:88px 24px 100px}
@@ -188,7 +191,7 @@ textarea{resize:vertical;min-height:90px}
 .interest-card input[type="checkbox"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;margin:0;padding:0}
 .interest-card.checked{border-color:var(--gold);background:rgba(201,149,74,.12);box-shadow:0 4px 20px rgba(201,149,74,.15)}
 .interest-card .i3d{
-  font-size:32px;
+  font-size:26px;color:var(--gold-light);
   filter:drop-shadow(0 4px 6px rgba(0,0,0,.6)) drop-shadow(0 1px 2px rgba(201,149,74,.3));
   transition:transform .2s;
   line-height:1;
@@ -201,7 +204,7 @@ textarea{resize:vertical;min-height:90px}
   width:16px;height:16px;border-radius:50%;
   background:var(--gold);display:none;
   align-items:center;justify-content:center;
-  font-size:9px;color:var(--navy);font-weight:700;
+  font-size:8px;color:var(--navy);font-weight:700;
 }
 .interest-card.checked .i3d-check{display:flex}
 
@@ -218,7 +221,7 @@ textarea{resize:vertical;min-height:90px}
 .check-row span em{color:var(--gold-light);font-style:normal}
 
 .prayer-box{margin-top:28px;padding:20px 22px;border:1px solid rgba(201,149,74,.15);border-radius:4px;background:rgba(201,149,74,.04);display:flex;gap:14px;align-items:flex-start}
-.prayer-box .ico{font-size:28px;flex-shrink:0;margin-top:2px;filter:drop-shadow(0 3px 5px rgba(201,149,74,.4))}
+.prayer-box .ico{font-size:24px;color:var(--gold);flex-shrink:0;margin-top:2px;filter:drop-shadow(0 3px 5px rgba(201,149,74,.4))}
 .prayer-box p{font-size:12px;color:var(--dim);font-style:italic;line-height:1.8;font-weight:300}
 .prayer-box p strong{color:var(--gold-light);font-style:normal}
 
@@ -236,7 +239,7 @@ textarea{resize:vertical;min-height:90px}
 
 .success-state{display:none;text-align:center;padding:20px 0}
 .success-state .tick3d{
-  font-size:72px;margin-bottom:20px;display:block;
+  font-size:60px;margin-bottom:20px;display:block;color:var(--gold-light);
   filter:drop-shadow(0 6px 12px rgba(201,149,74,.5));
   animation:popIn .6s cubic-bezier(.17,.67,.35,1.3) both;
 }
@@ -392,13 +395,13 @@ footer{
 <!-- LINKS BAND -->
 <div class="links-band">
   <a class="band-link" href="https://t.me/" target="_blank">
-    <span class="icon3d">✈️</span> Download Messages on Telegram
+    <span class="icon3d"><i class="fa-brands fa-telegram"></i></span> Download Messages on Telegram
   </a>
   <a class="band-link" href="https://daghewardmills.org/messages" target="_blank">
-    <span class="icon3d">📖</span> More about Bishop Dag Heward-Mills
+    <span class="icon3d"><i class="fa-solid fa-book-open"></i></span> More about Bishop Dag Heward-Mills
   </a>
   <a class="band-link" href="https://www.instagram.com/epcphc/" target="_blank">
-    <span class="icon3d">📸</span> Follow Us on Instagram
+    <span class="icon3d"><i class="fa-brands fa-instagram"></i></span> Follow Us on Instagram
   </a>
 </div>
 
@@ -416,7 +419,9 @@ footer{
       <div class="step" id="s3"><div class="step-dot">3</div><span>Connect</span></div>
     </div>
 
-    <form id="ftForm" novalidate>
+    <form id="ftForm" name="first-timer-registration" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="first-timer-registration"/>
+      <p style="display:none"><label>Don't fill this out: <input name="bot-field"/></label></p>
 
       <!-- PAGE 1 -->
       <div id="page1">
@@ -508,7 +513,7 @@ footer{
           <div class="form-group full">
             <label>Are you born again?</label>
             <div class="radio-group">
-              <label class="radio-pill"><input type="radio" name="bornAgain" value="Yes"/><span>✅ Yes</span></label>
+              <label class="radio-pill"><input type="radio" name="bornAgain" value="Yes"/><span><i class="fa-solid fa-circle-check" style="color:var(--gold)"></i> Yes</span></label>
               <label class="radio-pill"><input type="radio" name="bornAgain" value="No"/><span>Not Yet</span></label>
               <label class="radio-pill"><input type="radio" name="bornAgain" value="Not Sure"/><span>Not Sure</span></label>
             </div>
@@ -517,33 +522,33 @@ footer{
             <label>Areas of Interest</label>
             <div class="interest-grid" id="interestGrid">
               <div class="interest-card" data-val="Ushering" onclick="toggleInterest(this)">
-                <span class="i3d">🤝</span>
-                <div class="i3d-check">✓</div>
+                <span class="i3d"><i class="fa-solid fa-handshake"></i></span>
+                <div class="i3d-check"><i class="fa-solid fa-check"></i></div>
                 <span>Ushering</span>
               </div>
               <div class="interest-card" data-val="Media" onclick="toggleInterest(this)">
-                <span class="i3d">🎬</span>
-                <div class="i3d-check">✓</div>
+                <span class="i3d"><i class="fa-solid fa-video"></i></span>
+                <div class="i3d-check"><i class="fa-solid fa-check"></i></div>
                 <span>Media</span>
               </div>
               <div class="interest-card" data-val="Film Stars" onclick="toggleInterest(this)">
-                <span class="i3d">🎥</span>
-                <div class="i3d-check">✓</div>
+                <span class="i3d"><i class="fa-solid fa-film"></i></span>
+                <div class="i3d-check"><i class="fa-solid fa-check"></i></div>
                 <span>Film Stars</span>
               </div>
               <div class="interest-card" data-val="Singing Stars" onclick="toggleInterest(this)">
-                <span class="i3d">🎤</span>
-                <div class="i3d-check">✓</div>
+                <span class="i3d"><i class="fa-solid fa-microphone"></i></span>
+                <div class="i3d-check"><i class="fa-solid fa-check"></i></div>
                 <span>Singing Stars</span>
               </div>
               <div class="interest-card" data-val="Dancing Stars" onclick="toggleInterest(this)">
-                <span class="i3d">💃</span>
-                <div class="i3d-check">✓</div>
+                <span class="i3d"><i class="fa-solid fa-music"></i></span>
+                <div class="i3d-check"><i class="fa-solid fa-check"></i></div>
                 <span>Dancing Stars</span>
               </div>
               <div class="interest-card" data-val="Airport Stars" onclick="toggleInterest(this)">
-                <span class="i3d">✈️</span>
-                <div class="i3d-check">✓</div>
+                <span class="i3d"><i class="fa-solid fa-plane"></i></span>
+                <div class="i3d-check"><i class="fa-solid fa-check"></i></div>
                 <span>Airport Stars</span>
               </div>
             </div>
@@ -556,23 +561,29 @@ footer{
           <div class="form-group full">
             <label class="check-row" style="text-transform:none;font-size:inherit;letter-spacing:normal">
               <input type="checkbox" name="followup" checked/>
-              <span>I would love the church to <em>follow up</em> with me this week 🙏</span>
+              <span>I would love the church to <em>follow up</em> with me this week <i class="fa-solid fa-hands-praying" style="color:var(--gold)"></i></span>
+            </label>
+          </div>
+          <div class="form-group full">
+            <label class="check-row" style="text-transform:none;font-size:inherit;letter-spacing:normal">
+              <input type="checkbox" name="preachedTo"/>
+              <span><i class="fa-solid fa-bullhorn" style="color:var(--gold)"></i> Please notify the church that I was <em>preached to</em> today</span>
             </label>
           </div>
         </div>
         <div class="prayer-box">
-          <div class="ico">🕊️</div>
+          <div class="ico"><i class="fa-solid fa-dove"></i></div>
           <p>Your information is <strong>safe and private</strong>. We will never share your details. Our team will reach out in love to welcome you into the EPC family.</p>
         </div>
         <div class="btn-row">
           <button type="button" class="btn-submit btn-back" onclick="goStep(2)">← Back</button>
-          <button type="submit" class="btn-submit" id="submitBtn"><span id="submitBtnText">Submit Registration 🙌</span></button>
+          <button type="submit" class="btn-submit" id="submitBtn"><span id="submitBtnText">Submit Registration <i class="fa-solid fa-hands-praying"></i></span></button>
         </div>
       </div>
 
       <!-- SUCCESS -->
       <div class="success-state" id="successMsg">
-        <span class="tick3d">🙌</span>
+        <span class="tick3d"><i class="fa-solid fa-hands-praying"></i></span>
         <h2>Welcome to the Family!</h2>
         <p>Thank you for registering as a first timer at<br/>
         <strong style="color:var(--gold-light)">Everything by Prayer Church, Aparche.</strong><br/><br/>
@@ -580,7 +591,7 @@ footer{
         <button type="button" class="btn-submit" id="registerAnotherBtn"
           style="max-width:340px;margin:32px auto 0;display:flex;align-items:center;justify-content:center;gap:10px;"
           onclick="resetForm()">
-          <span style="font-size:18px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))">➕</span>
+          <span style="font-size:16px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))"><i class="fa-solid fa-plus"></i></span>
           Register Another Person
         </button>
       </div>
@@ -636,9 +647,9 @@ function goStep(n){
   document.getElementById('form').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// ── GOOGLE SHEETS ENDPOINT ──────────────────────────────────────────────
-// Paste your Apps Script Web App URL here after deploying:
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxsCGDhU8K2b81o-aGPxrf42Y5wC0JDJRbGUTYUVuhP9hIdjQGV467hxEj8_4Y2o4m6/exec';
+// ── NETLIFY FORMS ENDPOINT ──────────────────────────────────────────────
+// Submissions are handled by Netlify Forms (form name: "first-timer-registration")
+// and appear under Site → Forms in the Netlify dashboard.
 // ────────────────────────────────────────────────────────────────────────
 
 // ── LOCAL BACKUP: save to localStorage so data is NEVER lost ──
@@ -667,36 +678,36 @@ function getPendingLocal() {
   return items;
 }
 
-// ── SEND TO SHEET with timeout + retry ──
-async function sendToSheet(data) {
+// ── SEND TO NETLIFY FORMS with timeout + retry ──
+async function sendToNetlifyForms(data) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 10000); // 10s timeout
   try {
     const params = new URLSearchParams();
+    params.append('form-name', 'first-timer-registration');
     Object.entries(data).forEach(([k, v]) => params.append(k, v || ''));
-    await fetch(SHEET_URL, {
+    const res = await fetch('/', {
       method: 'POST',
-      mode: 'no-cors',
-      body: params,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString(),
       signal: controller.signal
     });
     clearTimeout(timer);
-    return true;
+    return res.ok;
   } catch(err) {
     clearTimeout(timer);
-    console.warn('sendToSheet failed:', err.message);
+    console.warn('sendToNetlifyForms failed:', err.message);
     return false;
   }
 }
 
 // ── RETRY any pending local backups (runs on every page load) ──
 async function retryPending() {
-  if (!SHEET_URL) return;
   const pending = getPendingLocal();
   if (pending.length === 0) return;
   console.log(`🔄 Retrying ${pending.length} pending submission(s)...`);
   for (const item of pending) {
-    const ok = await sendToSheet(item.data);
+    const ok = await sendToNetlifyForms(item.data);
     if (ok) {
       markLocalSent(item.key);
       console.log('✅ Retry succeeded for:', item.key);
@@ -726,16 +737,13 @@ document.getElementById('ftForm').addEventListener('submit', async function(e) {
   const localKey = 'epc_pending_' + Date.now();
   try { localStorage.setItem(localKey, JSON.stringify(data)); } catch(e) {}
 
-  // 2. Try sending to Google Sheet (with 10s timeout)
-  let sent = false;
-  if (SHEET_URL) {
-    sent = await sendToSheet(data);
-    if (sent) {
-      // Remove from local backup — successfully sent
-      try { localStorage.removeItem(localKey); } catch(e) {}
-    } else {
-      console.warn('⚠️ Submission queued locally — will retry on next page load');
-    }
+  // 2. Send to Netlify Forms (with 10s timeout)
+  const sent = await sendToNetlifyForms(data);
+  if (sent) {
+    // Remove from local backup — successfully sent
+    try { localStorage.removeItem(localKey); } catch(e) {}
+  } else {
+    console.warn('⚠️ Submission queued locally — will retry on next page load');
   }
 
   // 3. Show success regardless — data is safe either way
@@ -746,7 +754,7 @@ document.getElementById('ftForm').addEventListener('submit', async function(e) {
   document.getElementById('successMsg').style.display = 'block';
   document.getElementById('form').scrollIntoView({behavior:'smooth', block:'start'});
   btn.disabled = false;
-  btnText.textContent = 'Submit Registration 🙌';
+  btnText.innerHTML = 'Submit Registration <i class="fa-solid fa-hands-praying"></i>';
 });
 
 // Reset form for next registrant
