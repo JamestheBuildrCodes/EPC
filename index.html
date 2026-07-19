@@ -11,31 +11,33 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 <style>
 :root{
-  --gold:#C9954A;--gold-light:#E8C07A;--navy:#0A1628;--navy-mid:#112240;--navy-soft:#1B3358;
-  --white:#fff;--dim:#8898AA;--red:#C0392B;
+  --gold:#8F6310;--gold-light:#A9762F;--gold-fill:#C9954A;--gold-fill-light:#E8C07A;
+  --navy:#0A1628;--ink:#20304A;--dim:#54627A;--bg:#FFFFFF;--panel:#F8F5EF;
+  --white:#fff;--red:#C0392B;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Nunito',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
 
-#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+#stars{display:none}
 
 /* TOP BAR */
 .topbar{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 40px;
-  background:rgba(10,22,40,.9);
+  background:rgba(255,255,255,.9);
   backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(201,149,74,.18);
+  border-bottom:1px solid rgba(201,149,74,.25);
+  box-shadow:0 2px 24px rgba(20,16,8,.05);
 }
 .logo-row{display:flex;align-items:center;gap:14px}
-.logo-circle{width:50px;height:50px;border-radius:50%;border:2px solid var(--gold);overflow:hidden;flex-shrink:0}
+.logo-circle{width:50px;height:50px;border-radius:50%;border:2px solid var(--gold-fill);overflow:hidden;flex-shrink:0}
 .logo-circle img{width:100%;height:100%;object-fit:cover}
-.church-name{font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--gold-light);line-height:1.4}
-.church-name small{display:block;font-family:'Nunito',sans-serif;font-size:10px;font-weight:300;color:var(--dim);letter-spacing:.05em}
+.church-name{font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:.1em;color:var(--gold-light);line-height:1.4}
+.church-name small{display:block;font-family:'Nunito',sans-serif;font-size:11px;font-weight:400;color:var(--dim);letter-spacing:.05em}
 .socials{display:flex;gap:20px}
-.socials a{font-size:11px;letter-spacing:.1em;color:var(--dim);text-decoration:none;font-family:'Cinzel',serif;transition:color .2s}
+.socials a{font-size:12px;letter-spacing:.1em;color:var(--dim);text-decoration:none;font-family:'Cinzel',serif;transition:color .2s}
 .socials a:hover{color:var(--gold-light)}
 
 /* HERO */
@@ -46,14 +48,14 @@ body{font-family:'Nunito',sans-serif;background:var(--navy);color:var(--white);o
 }
 .hero::before{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 80% 55% at 50% -5%,rgba(201,149,74,.2) 0%,transparent 70%),
-             radial-gradient(ellipse 60% 50% at 10% 90%,rgba(27,51,88,.6) 0%,transparent 60%);
+  background:radial-gradient(ellipse 80% 55% at 50% -5%,rgba(201,149,74,.16) 0%,transparent 70%),
+             radial-gradient(ellipse 60% 50% at 10% 90%,rgba(201,149,74,.08) 0%,transparent 60%);
 }
 .denom-pill{
   display:inline-flex;align-items:center;gap:8px;
-  border:1px solid rgba(201,149,74,.35);border-radius:100px;
+  border:1px solid rgba(201,149,74,.4);border-radius:100px;
   padding:6px 20px;margin-bottom:36px;
-  font-size:11px;letter-spacing:.18em;color:var(--gold-light);
+  font-size:12px;letter-spacing:.18em;color:var(--gold-light);
   font-family:'Cinzel',serif;background:rgba(201,149,74,.07);
   animation:fadeDown .8s ease both;
 }
@@ -65,29 +67,29 @@ h1{
   animation:fadeDown .9s .1s ease both;
 }
 h1 .shimmer{
-  background:linear-gradient(90deg,var(--gold-light) 0%,#fff 45%,var(--gold) 100%);
+  background:linear-gradient(90deg,var(--gold) 0%,var(--ink) 45%,var(--gold-light) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.hero-sub{font-size:clamp(13px,2vw,17px);color:var(--dim);font-weight:300;letter-spacing:.05em;margin-bottom:10px;animation:fadeDown 1s .2s ease both}
-.location{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.26em;color:var(--gold);text-transform:uppercase;margin-bottom:44px;animation:fadeDown 1s .3s ease both}
+.hero-sub{font-size:clamp(15px,2.2vw,18px);color:var(--dim);font-weight:400;letter-spacing:.05em;margin-bottom:10px;animation:fadeDown 1s .2s ease both}
+.location{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.26em;color:var(--gold);text-transform:uppercase;margin-bottom:44px;animation:fadeDown 1s .3s ease both}
 .hero-cta{
-  display:inline-block;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;
-  color:var(--gold-light);text-decoration:none;border:1px solid var(--gold);
+  display:inline-block;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.2em;
+  color:var(--gold);text-decoration:none;border:1px solid var(--gold-fill);
   padding:15px 44px;border-radius:2px;position:relative;overflow:hidden;transition:color .3s;
   animation:fadeDown 1s .4s ease both;
 }
-.hero-cta::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.hero-cta::before{content:'';position:absolute;inset:0;background:var(--gold-fill);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
 .hero-cta:hover::before{transform:scaleX(1)}
 .hero-cta:hover{color:var(--navy)}
 .hero-cta span{position:relative;z-index:1}
-.scroll-arrow{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);animation:bounce 2s infinite;cursor:pointer;color:rgba(201,149,74,.5);font-size:22px;text-decoration:none}
+.scroll-arrow{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);animation:bounce 2s infinite;cursor:pointer;color:rgba(143,99,16,.55);font-size:22px;text-decoration:none}
 
 /* LEADERSHIP STRIP */
 .leadership{
   position:relative;z-index:1;
   display:grid;grid-template-columns:1fr auto 1fr auto 1fr;
   align-items:center;gap:0;
-  background:linear-gradient(135deg,rgba(201,149,74,.1),rgba(10,22,40,.95));
+  background:linear-gradient(135deg,rgba(201,149,74,.08),rgba(255,255,255,1));
   border-top:1px solid rgba(201,149,74,.2);border-bottom:1px solid rgba(201,149,74,.2);
   padding:0;overflow:hidden;
 }
@@ -98,17 +100,17 @@ h1 .shimmer{
 .leader-card.right{flex-direction:row-reverse;text-align:right}
 .leader-photo{
   width:80px;height:80px;border-radius:50%;
-  border:2.5px solid var(--gold);overflow:hidden;flex-shrink:0;
+  border:2.5px solid var(--gold-fill);overflow:hidden;flex-shrink:0;
 }
 .leader-photo img{width:100%;height:100%;object-fit:cover;object-position:top center}
 .leader-info{}
-.leader-role{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.24em;color:var(--gold);margin-bottom:4px;text-transform:uppercase}
-.leader-name{font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--white)}
-.leader-desc{font-size:11px;color:var(--dim);font-weight:300;margin-top:3px;line-height:1.5}
+.leader-role{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.24em;color:var(--gold);margin-bottom:4px;text-transform:uppercase}
+.leader-name{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--ink)}
+.leader-desc{font-size:13px;color:var(--dim);font-weight:400;margin-top:3px;line-height:1.5}
 .leader-link a{
-  display:inline-block;margin-top:8px;font-size:10px;letter-spacing:.12em;
+  display:inline-block;margin-top:8px;font-size:11px;letter-spacing:.12em;
   color:var(--gold);text-decoration:none;font-family:'Cinzel',serif;
-  border-bottom:1px solid rgba(201,149,74,.3);padding-bottom:1px;transition:color .2s;
+  border-bottom:1px solid rgba(201,149,74,.4);padding-bottom:1px;transition:color .2s;
 }
 .leader-link a:hover{color:var(--gold-light)}
 .leader-divider{
@@ -124,56 +126,56 @@ h1 .shimmer{
   flex-wrap:wrap;gap:16px;
   padding:22px 40px;
   background:rgba(201,149,74,.06);
-  border-bottom:1px solid rgba(201,149,74,.12);
+  border-bottom:1px solid rgba(201,149,74,.15);
 }
 .band-link{
   display:inline-flex;align-items:center;gap:10px;
-  font-family:'Cinzel',serif;font-size:11px;letter-spacing:.14em;
+  font-family:'Cinzel',serif;font-size:12px;letter-spacing:.14em;
   color:var(--gold-light);text-decoration:none;
-  padding:10px 22px;border:1px solid rgba(201,149,74,.3);border-radius:100px;
-  background:rgba(201,149,74,.05);transition:all .2s;
+  padding:10px 22px;border:1px solid rgba(201,149,74,.35);border-radius:100px;
+  background:rgba(255,255,255,.7);transition:all .2s;
 }
-.band-link:hover{background:rgba(201,149,74,.15);border-color:var(--gold);color:var(--white)}
-.band-link .icon3d{font-size:16px;color:var(--gold);filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.band-link:hover{background:rgba(201,149,74,.15);border-color:var(--gold-fill);color:var(--ink)}
+.band-link .icon3d{font-size:16px;color:var(--gold);filter:drop-shadow(0 1px 2px rgba(0,0,0,.15))}
 
 /* FORM SECTION */
 .form-section{position:relative;z-index:1;padding:88px 24px 100px}
-.sec-label{text-align:center;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
-.sec-title{text-align:center;font-family:'Cinzel Decorative',serif;font-size:clamp(22px,4vw,42px);font-weight:700;margin-bottom:10px}
-.sec-sub{text-align:center;font-size:14px;color:var(--dim);max-width:480px;margin:0 auto 52px;font-weight:300;line-height:1.8}
+.sec-label{text-align:center;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.sec-title{text-align:center;font-family:'Cinzel Decorative',serif;font-size:clamp(22px,4vw,42px);font-weight:700;margin-bottom:10px;color:var(--ink)}
+.sec-sub{text-align:center;font-size:16px;color:var(--dim);max-width:480px;margin:0 auto 52px;font-weight:400;line-height:1.8}
 
 .form-card{
   max-width:740px;margin:0 auto;
-  background:linear-gradient(145deg,rgba(17,34,64,.97),rgba(10,22,40,.99));
-  border:1px solid rgba(201,149,74,.22);border-radius:4px;
+  background:#fff;
+  border:1px solid rgba(201,149,74,.25);border-radius:6px;
   padding:52px 48px;position:relative;
-  box-shadow:0 40px 80px rgba(0,0,0,.55),0 0 0 1px rgba(201,149,74,.04) inset;
+  box-shadow:0 30px 70px rgba(20,16,8,.1),0 0 0 1px rgba(201,149,74,.05) inset;
 }
-.form-card::before{content:'';position:absolute;top:0;left:52px;right:52px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.form-card::before{content:'';position:absolute;top:0;left:52px;right:52px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-fill),transparent)}
 
 .step-bar{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:44px}
-.step{display:flex;flex-direction:column;align-items:center;gap:6px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.step{display:flex;flex-direction:column;align-items:center;gap:6px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
 .step.active{color:var(--gold-light)}
 .step-dot{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--dim);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--dim)}
-.step.active .step-dot{border-color:var(--gold);background:var(--gold);color:var(--navy)}
+.step.active .step-dot{border-color:var(--gold-fill);background:var(--gold-fill);color:var(--navy)}
 .step.done .step-dot{border-color:var(--gold);background:transparent;color:var(--gold)}
-.step-line{width:60px;height:1px;background:rgba(201,149,74,.25);margin-bottom:22px}
+.step-line{width:60px;height:1px;background:rgba(201,149,74,.3);margin-bottom:22px}
 
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px}
 .form-group{display:flex;flex-direction:column;gap:7px}
 .form-group.full{grid-column:1/-1}
 
-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;color:var(--gold-light);text-transform:uppercase}
+label{font-family:'Cinzel',serif;font-size:11px;font-weight:600;letter-spacing:.16em;color:var(--gold-light);text-transform:uppercase}
 
 input,select,textarea{
-  background:rgba(255,255,255,.04);border:1px solid rgba(201,149,74,.2);border-radius:2px;
-  color:var(--white);font-family:'Nunito',sans-serif;font-size:14px;font-weight:300;
+  background:var(--panel);border:1px solid rgba(201,149,74,.3);border-radius:2px;
+  color:var(--ink);font-family:'Nunito',sans-serif;font-size:15px;font-weight:400;
   padding:13px 16px;outline:none;transition:border-color .2s,background .2s;width:100%;
 }
-input::placeholder,textarea::placeholder{color:rgba(168,178,192,.35);font-style:italic}
-input:focus,select:focus,textarea:focus{border-color:var(--gold);background:rgba(201,149,74,.05)}
-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C9954A' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
-select option{background:var(--navy-mid);color:var(--white)}
+input::placeholder,textarea::placeholder{color:rgba(84,98,122,.6);font-style:italic}
+input:focus,select:focus,textarea:focus{border-color:var(--gold-fill);background:#fff}
+select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238F6310' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+select option{background:#fff;color:var(--ink)}
 textarea{resize:vertical;min-height:90px}
 
 /* DOB row — month + day only */
@@ -183,78 +185,78 @@ textarea{resize:vertical;min-height:90px}
 .interest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px}
 .interest-card{
   display:flex;flex-direction:column;align-items:center;gap:8px;
-  padding:16px 10px;border:1px solid rgba(201,149,74,.2);border-radius:8px;
-  cursor:pointer;transition:all .25s;background:rgba(255,255,255,.02);
+  padding:16px 10px;border:1px solid rgba(201,149,74,.25);border-radius:8px;
+  cursor:pointer;transition:all .25s;background:var(--panel);
   position:relative;
 }
-.interest-card:hover{border-color:rgba(201,149,74,.5);background:rgba(201,149,74,.07);transform:translateY(-2px)}
+.interest-card:hover{border-color:rgba(201,149,74,.6);background:rgba(201,149,74,.1);transform:translateY(-2px)}
 .interest-card input[type="checkbox"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;margin:0;padding:0}
-.interest-card.checked{border-color:var(--gold);background:rgba(201,149,74,.12);box-shadow:0 4px 20px rgba(201,149,74,.15)}
+.interest-card.checked{border-color:var(--gold-fill);background:rgba(201,149,74,.14);box-shadow:0 4px 20px rgba(201,149,74,.18)}
 .interest-card .i3d{
-  font-size:26px;color:var(--gold-light);
-  filter:drop-shadow(0 4px 6px rgba(0,0,0,.6)) drop-shadow(0 1px 2px rgba(201,149,74,.3));
+  font-size:26px;color:var(--gold-fill);
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.15));
   transition:transform .2s;
   line-height:1;
 }
 .interest-card:hover .i3d{transform:scale(1.15) translateY(-2px)}
-.interest-card span{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--dim);text-align:center;text-transform:uppercase;line-height:1.4}
+.interest-card span{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--dim);text-align:center;text-transform:uppercase;line-height:1.4}
 .interest-card.checked span{color:var(--gold-light)}
 .i3d-check{
   position:absolute;top:6px;right:8px;
   width:16px;height:16px;border-radius:50%;
-  background:var(--gold);display:none;
+  background:var(--gold-fill);display:none;
   align-items:center;justify-content:center;
   font-size:8px;color:var(--navy);font-weight:700;
 }
 .interest-card.checked .i3d-check{display:flex}
 
 .radio-group{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
-.radio-pill{display:flex;align-items:center;gap:8px;border:1px solid rgba(201,149,74,.2);border-radius:100px;padding:8px 16px;cursor:pointer;transition:border-color .2s,background .2s}
-.radio-pill:has(input:checked){border-color:var(--gold);background:rgba(201,149,74,.1)}
-.radio-pill input[type="radio"]{width:14px;height:14px;accent-color:var(--gold);cursor:pointer;padding:0;flex-shrink:0}
-.radio-pill span{font-size:13px;font-weight:300;color:var(--dim)}
+.radio-pill{display:flex;align-items:center;gap:8px;border:1px solid rgba(201,149,74,.25);border-radius:100px;padding:8px 16px;cursor:pointer;transition:border-color .2s,background .2s}
+.radio-pill:has(input:checked){border-color:var(--gold-fill);background:rgba(201,149,74,.12)}
+.radio-pill input[type="radio"]{width:14px;height:14px;accent-color:var(--gold-fill);cursor:pointer;padding:0;flex-shrink:0}
+.radio-pill span{font-size:14px;font-weight:400;color:var(--dim)}
 .radio-pill:has(input:checked) span{color:var(--gold-light)}
 
 .check-row{display:flex;align-items:flex-start;gap:12px;cursor:pointer}
-.check-row input[type="checkbox"]{width:16px;height:16px;accent-color:var(--gold);margin-top:2px;flex-shrink:0;padding:0}
-.check-row span{font-size:13px;font-weight:300;color:var(--dim);line-height:1.6}
+.check-row input[type="checkbox"]{width:16px;height:16px;accent-color:var(--gold-fill);margin-top:2px;flex-shrink:0;padding:0}
+.check-row span{font-size:14px;font-weight:400;color:var(--dim);line-height:1.6}
 .check-row span em{color:var(--gold-light);font-style:normal}
 
-.prayer-box{margin-top:28px;padding:20px 22px;border:1px solid rgba(201,149,74,.15);border-radius:4px;background:rgba(201,149,74,.04);display:flex;gap:14px;align-items:flex-start}
-.prayer-box .ico{font-size:24px;color:var(--gold);flex-shrink:0;margin-top:2px;filter:drop-shadow(0 3px 5px rgba(201,149,74,.4))}
-.prayer-box p{font-size:12px;color:var(--dim);font-style:italic;line-height:1.8;font-weight:300}
+.prayer-box{margin-top:28px;padding:20px 22px;border:1px solid rgba(201,149,74,.2);border-radius:4px;background:var(--panel);display:flex;gap:14px;align-items:flex-start}
+.prayer-box .ico{font-size:24px;color:var(--gold);flex-shrink:0;margin-top:2px}
+.prayer-box p{font-size:13px;color:var(--dim);font-style:italic;line-height:1.8;font-weight:400}
 .prayer-box p strong{color:var(--gold-light);font-style:normal}
 
 .btn-submit{
   width:100%;margin-top:28px;font-family:'Cinzel',serif;font-size:13px;letter-spacing:.22em;
-  color:var(--navy);background:var(--gold);border:none;border-radius:2px;padding:18px;
+  color:var(--navy);background:var(--gold-fill);border:none;border-radius:2px;padding:18px;
   cursor:pointer;position:relative;overflow:hidden;transition:background .25s,transform .15s;
   text-transform:uppercase;font-weight:700;
 }
-.btn-submit:hover{background:var(--gold-light);transform:translateY(-1px)}
-.btn-back{background:rgba(201,149,74,.12);color:var(--gold);flex:0 0 120px;width:auto;margin-top:0}
-.btn-back:hover{background:rgba(201,149,74,.22)}
+.btn-submit:hover{background:var(--gold-fill-light);transform:translateY(-1px)}
+.btn-back{background:rgba(201,149,74,.14);color:var(--gold);flex:0 0 120px;width:auto;margin-top:0}
+.btn-back:hover{background:rgba(201,149,74,.24)}
 .btn-row{display:flex;gap:14px;margin-top:28px}
 .btn-row .btn-submit{margin-top:0;flex:1}
 
 .success-state{display:none;text-align:center;padding:20px 0}
 .success-state .tick3d{
-  font-size:60px;margin-bottom:20px;display:block;color:var(--gold-light);
-  filter:drop-shadow(0 6px 12px rgba(201,149,74,.5));
+  font-size:60px;margin-bottom:20px;display:block;color:var(--gold-fill);
+  filter:drop-shadow(0 4px 10px rgba(201,149,74,.35));
   animation:popIn .6s cubic-bezier(.17,.67,.35,1.3) both;
 }
 .success-state h2{font-family:'Cinzel Decorative',serif;font-size:28px;color:var(--gold-light);margin-bottom:14px}
-.success-state p{font-size:15px;color:var(--dim);line-height:1.8;font-weight:300}
+.success-state p{font-size:16px;color:var(--dim);line-height:1.8;font-weight:400}
 
 footer{
-  position:relative;z-index:1;border-top:1px solid rgba(201,149,74,.12);
+  position:relative;z-index:1;border-top:1px solid rgba(201,149,74,.15);
   padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
-  background:rgba(10,22,40,.7);
+  background:var(--panel);
 }
-.footer-brand{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--dim)}
+.footer-brand{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.1em;color:var(--dim)}
 .footer-brand span{color:var(--gold)}
 .footer-links{display:flex;gap:20px}
-.footer-links a{font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.08em;transition:color .2s}
+.footer-links a{font-size:12px;color:var(--dim);text-decoration:none;letter-spacing:.08em;transition:color .2s}
 .footer-links a:hover{color:var(--gold-light)}
 
 @keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
@@ -519,6 +521,12 @@ footer{
             </div>
           </div>
           <div class="form-group full">
+            <label class="check-row" style="text-transform:none;font-size:inherit;letter-spacing:normal">
+              <input type="checkbox" name="preachedTo"/>
+              <span><i class="fa-solid fa-bullhorn" style="color:var(--gold)"></i> Please notify the church that I was <em>preached to</em> today</span>
+            </label>
+          </div>
+          <div class="form-group full">
             <label>Areas of Interest</label>
             <div class="interest-grid" id="interestGrid">
               <div class="interest-card" data-val="Ushering" onclick="toggleInterest(this)">
@@ -562,12 +570,6 @@ footer{
             <label class="check-row" style="text-transform:none;font-size:inherit;letter-spacing:normal">
               <input type="checkbox" name="followup" checked/>
               <span>I would love the church to <em>follow up</em> with me this week <i class="fa-solid fa-hands-praying" style="color:var(--gold)"></i></span>
-            </label>
-          </div>
-          <div class="form-group full">
-            <label class="check-row" style="text-transform:none;font-size:inherit;letter-spacing:normal">
-              <input type="checkbox" name="preachedTo"/>
-              <span><i class="fa-solid fa-bullhorn" style="color:var(--gold)"></i> Please notify the church that I was <em>preached to</em> today</span>
             </label>
           </div>
         </div>
