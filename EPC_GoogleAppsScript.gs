@@ -35,7 +35,10 @@ const HEADERS = [
 // ── MAIN HANDLER ──────────────────────────────────────────────
 function doPost(e) {
   try {
-    const data = JSON.parse(e.postData.contents);
+    const content = e.postData && e.postData.contents;
+    const data = content && content.trim().startsWith('{')
+      ? JSON.parse(content)
+      : e.parameter;
     appendToSheet(data);
     return jsonResponse({ status: 'success', message: 'Registered successfully' });
   } catch (err) {
