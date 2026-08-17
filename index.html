@@ -416,7 +416,12 @@ footer{
       <div class="step" id="s3"><div class="step-dot">3</div><span>Connect</span></div>
     </div>
 
-    <form id="ftForm" novalidate>
+    <form id="ftForm" name="first-timer-registration" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="first-timer-registration"/>
+      <input type="hidden" name="submissionId" id="submissionId"/>
+      <p style="display:none">
+        <label>Leave this field empty: <input name="bot-field"/></label>
+      </p>
 
       <!-- PAGE 1 -->
       <div id="page1">
@@ -641,15 +646,7 @@ function goStep(n){
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxsCGDhU8K2b81o-aGPxrf42Y5wC0JDJRbGUTYUVuhP9hIdjQGV467hxEj8_4Y2o4m6/exec';
 // ────────────────────────────────────────────────────────────────────────
 
-// ── LOCAL BACKUP: save to localStorage so data is NEVER lost ──
-function saveToLocal(data) {
-  try {
-    const key = 'epc_pending_' + Date.now();
-    localStorage.setItem(key, JSON.stringify(data));
-    console.log('💾 Backed up locally:', key);
-  } catch(e) { console.warn('localStorage unavailable:', e); }
-}
-
+// ── LOCAL BACKUP: keep unconfirmed submissions for automatic retry ──
 function markLocalSent(key) {
   try { localStorage.removeItem(key); } catch(e) {}
 }
@@ -667,38 +664,56 @@ function getPendingLocal() {
   return items;
 }
 
-// ── SEND TO SHEET with timeout + retry ──
+// ── PRIMARY STORAGE: NETLIFY FORMS ──
+async function sendToNetlify(data) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10000);
+  try {
+    const response = await fetch('/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: new URLSearchParams(data).toString(),
+      signal: controller.signal
+    });
+    return response.ok;
+  } catch(err) {
+    console.warn('Netlify submission failed:', err.message);
+    return false;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// ── SECONDARY COPY: GOOGLE SHEETS ──
 async function sendToSheet(data) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 10000); // 10s timeout
+  const timer = setTimeout(() => controller.abort(), 10000);
   try {
-    const params = new URLSearchParams();
-    Object.entries(data).forEach(([k, v]) => params.append(k, v || ''));
     await fetch(SHEET_URL, {
       method: 'POST',
       mode: 'no-cors',
-      body: params,
+      body: JSON.stringify(data),
       signal: controller.signal
     });
-    clearTimeout(timer);
     return true;
   } catch(err) {
-    clearTimeout(timer);
     console.warn('sendToSheet failed:', err.message);
     return false;
+  } finally {
+    clearTimeout(timer);
   }
 }
 
 // ── RETRY any pending local backups (runs on every page load) ──
 async function retryPending() {
-  if (!SHEET_URL) return;
   const pending = getPendingLocal();
   if (pending.length === 0) return;
   console.log(`🔄 Retrying ${pending.length} pending submission(s)...`);
   for (const item of pending) {
-    const ok = await sendToSheet(item.data);
-    if (ok) {
+    const stored = await sendToNetlify(item.data);
+    if (stored) {
       markLocalSent(item.key);
+      if (SHEET_URL) sendToSheet(item.data);
       console.log('✅ Retry succeeded for:', item.key);
     }
   }
@@ -720,25 +735,28 @@ document.getElementById('ftForm').addEventListener('submit', async function(e) {
   const data = {};
   fd.forEach((v, k) => data[k] = v);
   data.interests = document.getElementById('interestsVal').value;
+  data.submissionId = crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
   data.submittedAt = new Date().toLocaleString('en-NG', {timeZone:'Africa/Lagos'});
 
   // 1. Save locally FIRST — this guarantees data is never lost
   const localKey = 'epc_pending_' + Date.now();
   try { localStorage.setItem(localKey, JSON.stringify(data)); } catch(e) {}
 
-  // 2. Try sending to Google Sheet (with 10s timeout)
-  let sent = false;
-  if (SHEET_URL) {
-    sent = await sendToSheet(data);
-    if (sent) {
-      // Remove from local backup — successfully sent
-      try { localStorage.removeItem(localKey); } catch(e) {}
-    } else {
-      console.warn('⚠️ Submission queued locally — will retry on next page load');
-    }
+  // 2. Store in Netlify Forms and only confirm after an accepted response
+  const stored = await sendToNetlify(data);
+  if (!stored) {
+    console.warn('⚠️ Submission queued locally — will retry on next page load');
+    alert('We could not confirm your registration yet. Your details are saved on this device and will retry automatically. Please keep this page and try again when your connection is stable.');
+    btn.disabled = false;
+    btnText.textContent = 'Try Submission Again';
+    return;
   }
 
-  // 3. Show success regardless — data is safe either way
+  // 3. Netlify has confirmed storage; remove the backup and send a Sheet copy
+  try { localStorage.removeItem(localKey); } catch(e) {}
+  if (SHEET_URL) sendToSheet(data);
+
+  // 4. Show success only after Netlify confirms receipt
   [1,2,3].forEach(i => {
     document.getElementById('page'+i).style.display = 'none';
     document.getElementById('s'+i).className = 'step done';
